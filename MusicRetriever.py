@@ -6,11 +6,14 @@ OAUTH="CAACEdEose0cBAPZBg0AZBqOrub1FnMXgFURFuDZCsZA0YTiKBMDncZB6P3QbEbhC8234CX0H
 class Song:
     def __init__(self,resultStr):
         self.jsonObj = json.loads(json.dumps(resultStr))
-        self.siteName = self.jsonObj['site_name']
+        if('site_name' in self.jsonObj.keys()):
+            self.siteName = self.jsonObj['site_name']
         if('description' in self.jsonObj.keys()):
             self.description = self.jsonObj['description']
-        self.title = self.jsonObj['title']
-        self.url = self.jsonObj['url']
+        if('title' in self.jsonObj.keys()):
+            self.title = self.jsonObj['title']
+        if('title' in self.jsonObj.keys()):
+            self.url = self.jsonObj['url']
         if('image' in self.jsonObj.keys()):
             self.imageUrl = self.jsonObj['image'][0]['url']
 
@@ -55,15 +58,17 @@ class MusicRetriever:
         songInterests = []
         for songs in result["data"]:
             songInterest = {}
-            songId = songs["data"]["song"]["id"]
-            songInterest["songId"] = songId
-            songInterest["song"] = Song(self.graph.get_object(songId))
-            songInterest["publishTime"] = songs["publish_time"]
-            songInterests.append(songInterest)
+            if("data" in songs.keys()):
+                if("song" in songs["data"].keys()):
+                    songId = songs["data"]["song"]["id"]
+                    songInterest["songId"] = songId
+                    songInterest["song"] = Song(self.graph.get_object(songId))
+                    songInterest["publishTime"] = songs["publish_time"]
+                    songInterests.append(songInterest)
         return songInterests
 
 if __name__ == "__main__":
-    retriever = MusicRetriever(oauth="CAACEdEose0cBAEySFT2FFSsYywF26eZAWdjzVg6ptDtzm8U9vWfiiDKcZBlRRvd9n2LKaRAXvcTCPwSF8RWZCvzHk8ZCZA91huVJZBUMAFtEuozosGD0rkuW6xy4cnkjXgYwscK6ZCWazgXzB2XYb4uZCo1FyxX71TMZD")
+    retriever = MusicRetriever(oauth="CAACEdEose0cBAKSC7hblJPooioIgrjhwbwz237JkXVbkQ2ZBNxMkyvlcBDcjKujLIJbA3iuuUMXfu2BCaZBtpBzF5HZB0wEcZAFGQhIojVj2iJgHqwR4rQDjeA4uqKeXZCM2bY3sU8eObYGpQbqHB4WxjJmCEY6oZD")
     friendsInfo = retriever.getFriendsList()
     print json.dumps(friendsInfo)
 
