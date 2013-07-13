@@ -61,11 +61,14 @@
         columns: ["songs"],
         data   : [
            {songs:"1"},
-           {songs:"1"},
-           {songs:"1"}
+           {songs:"2"},
+           {songs:"3"}
         ],
     });
-    
+    var onClick = function(e){
+      console.log(e.currentTarget.getHTML());
+    }
+    Y.one('#left').delegate('click',onClick,'td');
     simple.render("#left");
 
 });
