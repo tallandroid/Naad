@@ -7,10 +7,12 @@ class Song:
     def __init__(self,resultStr):
         self.jsonObj = json.loads(json.dumps(resultStr))
         self.siteName = self.jsonObj['site_name']
-        self.description = self.jsonObj['description']
+        if('description' in self.jsonObj.keys()):
+            self.description = self.jsonObj['description']
         self.title = self.jsonObj['title']
         self.url = self.jsonObj['url']
-        self.imageUrl = self.jsonObj['image'][0]['url']
+        if('image' in self.jsonObj.keys()):
+            self.imageUrl = self.jsonObj['image'][0]['url']
 
     def getSiteName(self):
         return self.siteName
@@ -45,7 +47,7 @@ class MusicRetriever:
                 locationInfo = self.graph.get_object(profileInfo["location"]["id"])
                 _fr["location"] = locationInfo["location"]
             frsInfo.append(_fr)
-            print _fr
+            _fr["songInterest"] = self.getFriendsMusicInterests(_id)
         return frsInfo
 
     def getFriendsMusicInterests(self,id,lim=10):
@@ -59,6 +61,11 @@ class MusicRetriever:
             songInterest["publishTime"] = songs["publish_time"]
             songInterests.append(songInterest)
         return songInterests
+
+if __name__ == "__main__":
+    retriever = MusicRetriever(oauth="CAACEdEose0cBAEySFT2FFSsYywF26eZAWdjzVg6ptDtzm8U9vWfiiDKcZBlRRvd9n2LKaRAXvcTCPwSF8RWZCvzHk8ZCZA91huVJZBUMAFtEuozosGD0rkuW6xy4cnkjXgYwscK6ZCWazgXzB2XYb4uZCo1FyxX71TMZD")
+    friendsInfo = retriever.getFriendsList()
+    print json.dumps(friendsInfo)
 
 
             
