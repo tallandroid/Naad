@@ -45,7 +45,11 @@ var markers = [];
                     'https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle.png',
                     null, null, new google.maps.Point(3.5,3.5)),
                 clickable: false
-              }));
+              })
+              )
+            }
+            for(var i=0;i<markers.length;i++){
+              show_friends();
             }
             bounds.extend(place.geometry.location);
           }
@@ -58,4 +62,11 @@ var markers = [];
         });
       }
 
+      function show_friends() {
+            $('ul').circleMenu({
+              item_diameter: 40,
+              circle_radius: 100,
+              direction: 'bottom-right'
+            });
+      }
       google.maps.event.addDomListenerOnce(window, 'load', initialize);

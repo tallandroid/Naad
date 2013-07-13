@@ -49,8 +49,9 @@ class MusicRetriever:
             if("location" in profileInfo.keys()):
                 locationInfo = self.graph.get_object(profileInfo["location"]["id"])
                 _fr["location"] = locationInfo["location"]
-            frsInfo.append(_fr)
             _fr["songInterest"] = self.getFriendsMusicInterests(_id)
+            json.dumps(_fr)
+            frsInfo.append(_fr)
         return frsInfo
 
     def getFriendsMusicInterests(self,id,lim=10):
