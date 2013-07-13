@@ -32,6 +32,10 @@ class Song:
     def getUrl(self):
         return getUrl
 
+    def __str__():
+        return self.getTitle() + "  " + self.getUrl() + "  "+  self.getImageUrl()
+
+
 class MusicRetriever:
     def __init__(self,oauth=OAUTH):
         self.graph = facebook.GraphAPI(oauth)
@@ -50,7 +54,7 @@ class MusicRetriever:
                 locationInfo = self.graph.get_object(profileInfo["location"]["id"])
                 _fr["location"] = locationInfo["location"]
             _fr["songInterest"] = self.getFriendsMusicInterests(_id)
-            json.dumps(_fr)
+            print json.dumps(_fr)
             frsInfo.append(_fr)
         return frsInfo
 
@@ -63,13 +67,24 @@ class MusicRetriever:
                 if("song" in songs["data"].keys()):
                     songId = songs["data"]["song"]["id"]
                     songInterest["songId"] = songId
-                    songInterest["song"] = Song(self.graph.get_object(songId))
+                    result = self.graph.get_object(songId);
+                    if('site_name' in result.keys()):
+                        result['siteName'] = result['site_name']
+                    if('description' in result.keys()):
+                        result['description'] = result['description']
+                    if('title' in result.keys()):
+                        songInterest['title'] = result['title']
+                    if('url' in result.keys()):
+                        songInterest['url'] = result['url']
+                    if('image' in result.keys()):
+                        songInterest['imageUrl'] = result['image'][0]['url']
+                    #songInterest["song"] = Song(self.graph.get_object(songId))
                     songInterest["publishTime"] = songs["publish_time"]
                     songInterests.append(songInterest)
         return songInterests
 
 if __name__ == "__main__":
-    retriever = MusicRetriever(oauth="CAACEdEose0cBAKSC7hblJPooioIgrjhwbwz237JkXVbkQ2ZBNxMkyvlcBDcjKujLIJbA3iuuUMXfu2BCaZBtpBzF5HZB0wEcZAFGQhIojVj2iJgHqwR4rQDjeA4uqKeXZCM2bY3sU8eObYGpQbqHB4WxjJmCEY6oZD")
+    retriever = MusicRetriever(oauth="CAACEdEose0cBAOXq1iDz2jvhXzED9yz2MUCxTpS3YEe0bGLb0HbNjy4GbRHX6CdLvl4NcTVNK7FeyPzZB1Gb3ub1KTmpZBZAEpPSxlz4vRyV8wNrWxE4otT9MXc4hE7HwnxAKhEIga5TqJ9v6z02v9uvBZCDG5zaU2Lw0AlfngZDZD")
     friendsInfo = retriever.getFriendsList()
     print json.dumps(friendsInfo)
 

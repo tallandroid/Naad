@@ -17,7 +17,11 @@ MY_URL = 'http://127.0.0.1:8000/appfb/map/'
 def fbauth(request):
     code = request.GET.get('code')
     if code is None:
-        args = dict(client_id=APP_ID, redirect_uri=MY_URL, scope="user_likes,friends_likes")
+        FACEBOOK_SCOPE = "email, user_likes, user_actions.music, user_location, user_about_me, friends_actions.music, friends_about_me, friends_likes, friends_location, read_friendlists"
+        args = dict(client_id=APP_ID, redirect_uri=MY_URL, scope=FACEBOOK_SCOPE)
+
+
+
         redirect_url = "https://graph.facebook.com/oauth/authorize?" + urllib.urlencode(args)
         return HttpResponseRedirect(redirect_url)
     else:
