@@ -1,0 +1,5 @@
+import MusicRetriever
+
+retriever = MusicRetriever.MusicRetriever("CAACEdEose0cBAPdptkPM4dmJNOOHY63jjdIO5q4EFRY1gPZAG0633UeZAsijaec9ffHejrrNXrVbwLY2srlix5C9GUKfrAuVH6YUa3EjlURSngltHfGkqJ29b2IyZA04Q3FhMAIs5NLU8ZCZAbfpe1UQVHHNtbRcZD")
+test = retriever.getFriendsMusicInterests('571762562')
+print test
