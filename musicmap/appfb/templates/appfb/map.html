@@ -63,35 +63,29 @@
 
     </style>
     <script>
+    var count = 3;
+    var leftie = function(userid) {
     YUI().use("datatable", function (Y) {
 
       var fullAppData = $("#app-data").html()
-      var userID = ''
 
 
-      if(userID){
-        var getColumns = function(userID){
-        var fullJson = $.parseJSON(fullAppData).songs
-        }
-      }
-      else{
-        var fullJson = $.parseJSON(fullAppData).songs[0].songInterest
+      var fullJson = $.parseJSON(fullAppData).songs[userid].songInterest
 
-        var columns = [
-            {
-                key: 'imageUrl',
-                formatter: '<img src="{value}" height=50px width=50px/>',
-            },
-            {
-                key: 'title',
-                formatter: '{value}' // formatter template string
-            },
-            {
-                key: 'url',
-                formatter: '<a rel="prettyPhoto" href="{value}" > Play </a>' // formatter template string
-            }
-            ];
-        }
+      var columns = [
+          {
+              key: 'imageUrl',
+              formatter: '<img src="{value}" height=50px width=50px/>',
+          },
+          {
+              key: 'title',
+              formatter: '{value}' // formatter template string
+          },
+          {
+              key: 'url',
+              formatter: '<a rel="prettyPhoto" href="{value}" > Play </a>' // formatter template string
+          }
+          ];
 
 
       
@@ -119,6 +113,9 @@
       simple.render("#left");
 
 });
+    };
+
+
     </script>
   </head>
   <body>
@@ -248,6 +245,7 @@
   $(document).ready(function(){
     $("#app-data").hide();
     $("a[rel^='prettyPhoto']").prettyPhoto();
+    leftie(10);
   });
 </script>
   </body>

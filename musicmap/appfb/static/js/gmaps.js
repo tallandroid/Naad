@@ -81,6 +81,9 @@ defaultId = 'me';
         direction: 'full',
         trigger:'click'
       }).on('circleMenu-open',function(){
+          $("#left").html('');
+          count= (count+1)%100;
+          leftie(count);
           console.log('menu opened 2');
         });
         if(marker){
