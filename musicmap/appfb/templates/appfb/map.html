@@ -71,7 +71,7 @@
 
       if(userID){
         var getColumns = function(userID){
-        //var fullJson = $.parseJSON(fullAppData).songs
+        var fullJson = $.parseJSON(fullAppData).songs
         }
       }
       else{
@@ -246,6 +246,7 @@
 
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function(){
+    $("#app-data").hide();
     $("a[rel^='prettyPhoto']").prettyPhoto();
   });
 </script>

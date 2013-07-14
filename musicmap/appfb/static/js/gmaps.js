@@ -6,6 +6,7 @@ defaultId = 'me';
       }*/
       function initialize() {
         var map = new google.maps.Map(document.getElementById('map-canvas'), {
+          streetViewControl: false,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           maxZoom: 5,
           //center:new google.maps.LatLng(17.3667, 78.4667),
