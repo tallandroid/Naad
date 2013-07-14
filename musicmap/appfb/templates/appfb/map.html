@@ -5,13 +5,15 @@
     <meta charset="utf-8">
     <title>Google Maps marker</title>
     <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/prettyPhoto.css" type="text/css" media="screen" charset="utf-8" />
    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script type="text/javascript" src="/static/js/gmaps.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.prettyPhoto.js"></script>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
     <script type="text/javascript" src="/static/js/jquery.menu.js"></script>
     <script src="http://yui.yahooapis.com/3.10.3/build/yui/yui-min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 <style>
     .yui3-skin-sam .yui3-datatable-table{
       width:100%;
@@ -70,14 +72,19 @@
         ],
     });
     var onClick = function(e){
-     var q=e.currentTarget.getHTML();
-      $.getJSON("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20youtube.search%20where%20query%3D%22"+q+"%22%20%20LIMIT%201&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=cbfunc",
-  function(data) {
-        var result=data.query.results.video.url;
-       console.log(result); /* work with results object here*/
+      console.log('aaaaaaaaaa');
+      var q=e.currentTarget.getHTML();
+      console.log(q);
+      $.getJSON("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20youtube.search%20where%20query%3D%22"+q+"%22%20%20LIMIT%201&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
+        function(data) {
+              var result=data.query.results.video.url;
+              console.log(result); /* work with results object here*/
+              $(".show-video a").attr("href", result)
+              $(".show-video a").trigger('click')
 
-    }
-);
+        }
+      );
+      console.log('bbbbbbbb');
     }
     Y.one('#left').delegate('click',onClick,'td');
     simple.render("#left");
@@ -88,21 +95,27 @@
   <body>
     <div id="left" class="yui3-skin-sam"></div>
 
-
+    <div class="show-video" style="display:none">
+      <a id="play" href="" rel="prettyPhoto">Youtube Video</a>
+    </div>
     
-<ul class="menu">
-  <li><a href="#">+</a></li>
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-</ul>
+    <ul class="menu">
+      <li><a href="#">+</a></li>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+    </ul>
 
     <input id="target" type="text" placeholder="Search Box">
     <div id="map-canvas"></div>
 
 
-
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $(".show-video a[rel^='prettyPhoto']").prettyPhoto();
+  });
+</script>
   </body>
 </html>
