@@ -1,4 +1,5 @@
 var markers = [];
+defaultId = 'me';
       /*function test() {
         
           initialize();
@@ -33,11 +34,13 @@ var markers = [];
           for(var i = 0;i<places.songs.length;i++){
             if(places.songs[i].location){
               img = "/static/images/test.jpg";
+              
               var latlng = new google.maps.LatLng(places.songs[i].location.latitude,places.songs[i].location.longitude);
               $.each(places.songs[i],function(test){
                 if(test.match('[0-9]')){
-                  console.log(test);
+                  //console.log(test,value);
                   img = "http://graph.facebook.com/"+test+"/picture";
+                  defaultId = test;
                 }      
               });
               var div = '<ul class="menu"><li><a href="#"><img src="'+img+'"></a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">5</a></li></ul>'
@@ -49,19 +52,21 @@ var markers = [];
                 visible:true,
                 map:map
                 });
-               letssee(marker);
               google.maps.event.addListener(marker, 'ready', function() {
+                letssee(this);
+              });
+              google.maps.event.addListener(marker, 'click', function() {
                 letssee(this);
               });
               markers.push(marker);
             }
             //bounds.extend(place.geometry.location);
           }
-        var input = document.getElementById('target');
+         
         /*searchBox.setBounds(map.getBounds());
         google.maps.event.addListener(searchBox)*/
-         var bounds = new google.maps.LatLngBounds();
-          map.fitBounds(bounds);
+         /*var bounds = new google.maps.LatLngBounds();
+          map.fitBounds(bounds);*/
 
         /*google.maps.event.addListener(map, 'bounds_changed', function() {
           searchBox.setBounds(map.getBounds());
@@ -72,8 +77,11 @@ var markers = [];
       $('ul').circleMenu({
         item_diameter: 40,
         circle_radius: 100,
-        direction: 'full'
-      });
+        direction: 'full',
+        trigger:'click'
+      }).on('circleMenu-open',function(){
+          console.log('menu opened 2');
+        });
         if(marker){
           marker.setVisible(true);
         }
