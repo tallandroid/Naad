@@ -1,6 +1,7 @@
 var markers = [];
   
       function initialize() {
+        letssee();
         var map = new google.maps.Map(document.getElementById('map-canvas'), {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           maxZoom: 5,
@@ -38,18 +39,21 @@ var markers = [];
             if (place.photos) {
               markers.push(new PhotoMarker(place, map, modalWindow));
             } else {
-              markers.push(new google.maps.Marker({
-                position: place.geometry.location,
+              var div = '<ul class="menu"><li><a href="#"><img src="/static/images/test.jpg"></a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">5</a></li></ul>'
+              img = "/static/images/test.jpg";
+               marker = new RichMarker({
+               position: place.geometry.location,
                 map: map,
-                icon: new google.maps.MarkerImage(
-                    'https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle.png',
-                    null, null, new google.maps.Point(3.5,3.5)),
-                clickable: false
-              })
-              )
-            }
-            for(var i=0;i<markers.length;i++){
-              show_friends();
+                draggable: true,
+                //content: '<ul class="menu"><li><a href="#">+</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">5</a></li></ul>'
+                content: div,
+                visible:false
+                });
+               letssee(marker);
+              google.maps.event.addListener(marker, 'ready', function() {
+                letssee(this);
+              });
+              markers.push(marker);
             }
             bounds.extend(place.geometry.location);
           }
@@ -62,11 +66,14 @@ var markers = [];
         });
       }
 
-      function show_friends() {
-            $('ul').circleMenu({
-              item_diameter: 40,
-              circle_radius: 100,
-              direction: 'bottom-right'
-            });
+      function letssee(marker){
+      $('ul').circleMenu({
+        item_diameter: 40,
+        circle_radius: 100,
+        direction: 'bottom-right'
+      });
+        if(marker){
+          marker.setVisible(true);
+        }
       }
       google.maps.event.addDomListenerOnce(window, 'load', initialize);
