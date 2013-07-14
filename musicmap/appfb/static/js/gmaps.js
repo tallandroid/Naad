@@ -70,7 +70,7 @@ var markers = [];
       $('ul').circleMenu({
         item_diameter: 40,
         circle_radius: 100,
-        direction: 'bottom-right'
+        direction: 'full'
       });
         if(marker){
           marker.setVisible(true);
